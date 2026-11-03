@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- NOTA FISCAL FICTICIA, criada apenas para treino. Empresas e CNPJs nao existem. -->
+<nfeProc xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">
+  <NFe>
+    <infNFe Id="NFe35261045678901000123550010000016111000016113" versao="4.00">
+      <ide>
+        <cUF>35</cUF>
+        <natOp>VENDA DE MERCADORIA</natOp>
+        <mod>55</mod>
+        <serie>1</serie>
+        <nNF>1611</nNF>
+        <dhEmi>2026-10-02T09:05:00-03:00</dhEmi>
+      </ide>
+      <emit>
+        <CNPJ>45678901000123</CNPJ>
+        <xNome>DISTRIBUIDORA ALFA ELETRONICOS LTDA</xNome>
+        <xFant>ALFA ELETRONICOS</xFant>
+        <enderEmit><xMun>Sao Paulo</xMun><UF>SP</UF></enderEmit>
+      </emit>
+      <dest>
+        <CNPJ>11222333000144</CNPJ>
+        <xNome>BUENO TEC INFORMATICA (EXEMPLO)</xNome>
+        <enderDest><xMun>Matelandia</xMun><UF>PR</UF></enderDest>
+      </dest>
+      <det nItem="1">
+        <prod>
+          <cProd>CAB-HDMI-2M</cProd>
+          <cEAN>SEM GTIN</cEAN>
+          <xProd>CABO HDMI 2.0 2 METROS</xProd>
+          <NCM>85444200</NCM>
+          <CFOP>6102</CFOP>
+          <uCom>UN</uCom>
+          <qCom>30.0000</qCom>
+          <vUnCom>9.5000000000</vUnCom>
+          <vProd>285.00</vProd>
+        </prod>
+        <imposto>
+          <ICMS><ICMS00><orig>0</orig><CST>00</CST><vBC>285.00</vBC><pICMS>12.00</pICMS><vICMS>34.20</vICMS></ICMS00></ICMS>
+        </imposto>
+      </det>
+      <det nItem="2">
+        <prod>
+          <cProd>PEN-32GB</cProd>
+          <cEAN>SEM GTIN</cEAN>
+          <xProd>PENDRIVE 32GB USB 3.0</xProd>
+          <NCM>85235110</NCM>
+          <CFOP>6102</CFOP>
+          <uCom>UN</uCom>
+          <qCom>40.0000</qCom>
+          <vUnCom>16.9000000000</vUnCom>
+          <vProd>676.00</vProd>
+        </prod>
+        <imposto>
+          <ICMS><ICMS00><orig>0</orig><CST>00</CST><vBC>676.00</vBC><pICMS>12.00</pICMS><vICMS>81.12</vICMS></ICMS00></ICMS>
+        </imposto>
+      </det>
+      <det nItem="3">
+        <prod>
+          <cProd>HUB-USB-4P</cProd>
+          <cEAN>SEM GTIN</cEAN>
+          <xProd>HUB USB 4 PORTAS</xProd>
+          <NCM>84733049</NCM>
+          <CFOP>6102</CFOP>
+          <uCom>UN</uCom>
+          <qCom>8.0000</qCom>
+          <vUnCom>22.0000000000</vUnCom>
+          <vProd>176.00</vProd>
+        </prod>
+        <imposto>
+          <ICMS><ICMS00><orig>0</orig><CST>00</CST><vBC>176.00</vBC><pICMS>12.00</pICMS><vICMS>21.12</vICMS></ICMS00></ICMS>
+        </imposto>
+      </det>
+      <det nItem="4">
+        <prod>
+          <cProd>MOU-USB-01</cProd>
+          <cEAN>SEM GTIN</cEAN>
+          <xProd>MOUSE OPTICO USB 1200DPI</xProd>
+          <NCM>84716053</NCM>
+          <CFOP>6102</CFOP>
+          <uCom>UN</uCom>
+          <qCom>20.0000</qCom>
+          <vUnCom>14.2000000000</vUnCom>
+          <vProd>284.00</vProd>
+        </prod>
+        <imposto>
+          <ICMS><ICMS00><orig>0</orig><CST>00</CST><vBC>284.00</vBC><pICMS>12.00</pICMS><vICMS>34.08</vICMS></ICMS00></ICMS>
+        </imposto>
+      </det>
+      <total>
+        <ICMSTot>
+          <vBC>1421.00</vBC>
+          <vICMS>170.52</vICMS>
+          <vProd>1421.00</vProd>
+          <vFrete>48.50</vFrete>
+          <vDesc>0.00</vDesc>
+          <vNF>1469.50</vNF>
+        </ICMSTot>
+      </total>
+    </infNFe>
+  </NFe>
+  <protNFe versao="4.00">
+    <infProt>
+      <chNFe>35261045678901000123550010000016111000016113</chNFe>
+      <dhRecbto>2026-10-02T09:05:00-03:00</dhRecbto>
+      <cStat>100</cStat>
+      <xMotivo>Autorizado o uso da NF-e</xMotivo>
+    </infProt>
+  </protNFe>
+</nfeProc>

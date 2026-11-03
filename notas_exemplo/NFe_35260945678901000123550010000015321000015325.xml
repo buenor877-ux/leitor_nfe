@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- NOTA FISCAL FICTICIA, criada apenas para treino. Empresas e CNPJs nao existem. -->
+<nfeProc xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">
+  <NFe>
+    <infNFe Id="NFe35260945678901000123550010000015321000015325" versao="4.00">
+      <ide>
+        <cUF>35</cUF>
+        <natOp>VENDA DE MERCADORIA</natOp>
+        <mod>55</mod>
+        <serie>1</serie>
+        <nNF>1532</nNF>
+        <dhEmi>2026-09-04T10:15:00-03:00</dhEmi>
+      </ide>
+      <emit>
+        <CNPJ>45678901000123</CNPJ>
+        <xNome>DISTRIBUIDORA ALFA ELETRONICOS LTDA</xNome>
+        <xFant>ALFA ELETRONICOS</xFant>
+        <enderEmit><xMun>Sao Paulo</xMun><UF>SP</UF></enderEmit>
+      </emit>
+      <dest>
+        <CNPJ>11222333000144</CNPJ>
+        <xNome>BUENO TEC INFORMATICA (EXEMPLO)</xNome>
+        <enderDest><xMun>Matelandia</xMun><UF>PR</UF></enderDest>
+      </dest>
+      <det nItem="1">
+        <prod>
+          <cProd>CAB-HDMI-2M</cProd>
+          <cEAN>SEM GTIN</cEAN>
+          <xProd>CABO HDMI 2.0 2 METROS</xProd>
+          <NCM>85444200</NCM>
+          <CFOP>6102</CFOP>
+          <uCom>UN</uCom>
+          <qCom>20.0000</qCom>
+          <vUnCom>9.9000000000</vUnCom>
+          <vProd>198.00</vProd>
+        </prod>
+        <imposto>
+          <ICMS><ICMS00><orig>0</orig><CST>00</CST><vBC>198.00</vBC><pICMS>12.00</pICMS><vICMS>23.76</vICMS></ICMS00></ICMS>
+        </imposto>
+      </det>
+      <det nItem="2">
+        <prod>
+          <cProd>MOU-USB-01</cProd>
+          <cEAN>SEM GTIN</cEAN>
+          <xProd>MOUSE OPTICO USB 1200DPI</xProd>
+          <NCM>84716053</NCM>
+          <CFOP>6102</CFOP>
+          <uCom>UN</uCom>
+          <qCom>15.0000</qCom>
+          <vUnCom>14.5000000000</vUnCom>
+          <vProd>217.50</vProd>
+        </prod>
+        <imposto>
+          <ICMS><ICMS00><orig>0</orig><CST>00</CST><vBC>217.50</vBC><pICMS>12.00</pICMS><vICMS>26.10</vICMS></ICMS00></ICMS>
+        </imposto>
+      </det>
+      <det nItem="3">
+        <prod>
+          <cProd>TEC-USB-ABNT2</cProd>
+          <cEAN>SEM GTIN</cEAN>
+          <xProd>TECLADO USB ABNT2</xProd>
+          <NCM>84716052</NCM>
+          <CFOP>6102</CFOP>
+          <uCom>UN</uCom>
+          <qCom>10.0000</qCom>
+          <vUnCom>29.9000000000</vUnCom>
+          <vProd>299.00</vProd>
+        </prod>
+        <imposto>
+          <ICMS><ICMS00><orig>0</orig><CST>00</CST><vBC>299.00</vBC><pICMS>12.00</pICMS><vICMS>35.88</vICMS></ICMS00></ICMS>
+        </imposto>
+      </det>
+      <total>
+        <ICMSTot>
+          <vBC>714.50</vBC>
+          <vICMS>85.74</vICMS>
+          <vProd>714.50</vProd>
+          <vFrete>35.00</vFrete>
+          <vDesc>0.00</vDesc>
+          <vNF>749.50</vNF>
+        </ICMSTot>
+      </total>
+    </infNFe>
+  </NFe>
+  <protNFe versao="4.00">
+    <infProt>
+      <chNFe>35260945678901000123550010000015321000015325</chNFe>
+      <dhRecbto>2026-09-04T10:15:00-03:00</dhRecbto>
+      <cStat>100</cStat>
+      <xMotivo>Autorizado o uso da NF-e</xMotivo>
+    </infProt>
+  </protNFe>
+</nfeProc>
