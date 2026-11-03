@@ -1,4 +1,4 @@
-
+#import xml.etree.ElementTree as ET serve para ler arquivos XML, que é o formato das notas fiscais eletrônicas (NF-e). E pathlib.Path serve para manipular caminhos de arquivos e diretórios de forma mais conveniente.
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
@@ -8,16 +8,22 @@ NS = {"nfe": "http://www.portalfiscal.inf.br/nfe"}
 # Pega o primeiro arquivo .xml da pasta
 caminho = sorted(Path("notas_exemplo").glob("*.xml"))[0]
 
+# Lê o arquivo XML e pega a raiz do documento
 raiz = ET.parse(caminho).getroot()
 
+# --- 1. Pega o nome do fornecedor (emitente da n# --- 1. Cabeçalho: fornecedor, número, data e valor total da nota)
 fornecedor = raiz.find(".//nfe:emit/nfe:xNome", NS).text
 print("Arquivo:", caminho.name)
 print("Fornecedor:", fornecedor)
 print("número da NF-e:", raiz.find(".//nfe:ide/nfe:nNF", NS).text)
 print("data de emissão:", raiz.find(".//nfe:ide/nfe:dhEmi", NS).text)
 print("valor total da NF-e:", raiz.find(".//nfe:total/nfe:ICMSTot/nfe:vNF", NS).text)
+
+# --- 2. Pega os produtos da nota
 print("cada produto da NF-e:")
 produtos = raiz.findall(".//nfe:det", NS)
+
+# --- 3. Mostra cada produto, quantidade, valor unitário e valor total
 for produto in produtos:
     nome = produto.find("nfe:prod/nfe:xProd", NS).text
     qtd = float(produto.find("nfe:prod/nfe:qCom", NS).text)
