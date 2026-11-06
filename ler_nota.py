@@ -20,14 +20,8 @@ def ler_nota(caminho):
         "numero": raiz.find(".//nfe:ide/nfe:nNF", NS).text,
         "data_emissao": raiz.find(".//nfe:ide/nfe:dhEmi", NS).text
     }
-    print("Arquivo:", nota_info["arquivo"])
-    print("Fornecedor:", nota_info["fornecedor"])
-    print("Número da NF-e:", nota_info["numero"])
-    print("Data de emissão:", nota_info["data_emissao"])
-    print("valor total da NF-e:", raiz.find(".//nfe:total/nfe:ICMSTot/nfe:vNF", NS).text)
 
     # --- 2. Pega os produtos da nota
-    print("cada produto da NF-e:")
     produtos = raiz.findall(".//nfe:det", NS)
 
     # --- 3. Guarde os produtos numa lista de dicionários, um para cada produto, e coloque essa lista dentro do dicionário da nota e Faça a função devolver esse dicionário.
@@ -43,10 +37,6 @@ def ler_nota(caminho):
             "valor_unitario": unit,
             "valor_total": valor
         })
-        print(f"  {nome} | {qtd:.0f} un x R$ {unit:.2f} = R$ {valor:.2f}")
-
-    # 1. Soma dos produtos, item por item
-    soma_itens = sum(float(produto.find("nfe:prod/nfe:vProd", NS).text) for produto in produtos)
 
     # 2. Pega os valores do bloco de totais
     total = raiz.find(".//nfe:total/nfe:ICMSTot", NS)
@@ -58,28 +48,39 @@ def ler_nota(caminho):
     nota_info["frete"] = frete
     nota_info["valor_nota"] = valor_nota
 
-    # 3. Conferência
-    if round(soma_itens, 2) == round(total_produtos, 2):
-        print("Conferência OK: a soma dos itens bate com o total de produtos.")
-    else:
-        print(f"Diferença: itens R$ {soma_itens:.2f} x total da nota R$ {total_produtos:.2f}")
-
-    # 4. Bônus: mostrar a conta do total
-    print(f"Produtos R$ {total_produtos:.2f} + Frete R$ {frete:.2f} = Nota R$ {valor_nota:.2f}")
-
     return nota_info
 
 def main():
-    # Caminho do arquivo XML da nota fiscal
-    caminho_nota = "notas_exemplo"
+    # Pega uma nota da pasta: troque o [0] por [1] ou [2] para testar as outras
+    caminho_nota = sorted(Path("notas_exemplo").glob("*.xml"))[0]
 
-    # Chama a função ler_nota e armazena o resultado em uma variável
-    nota_info = ler_nota(Path(caminho_nota) / "NFe_35260945678901000123550010000015321000015325.xml")  
+    # Lê a nota e guarda o dicionário devolvido pela função
+    nota_info = ler_nota(caminho_nota)
 
+    # Cabeçalho
+    print("Arquivo:", nota_info["arquivo"])
+    print("Fornecedor:", nota_info["fornecedor"])
+    print("Número da NF-e:", nota_info["numero"])
+    print("Data de emissão:", nota_info["data_emissao"])
+    print(f"Valor total da NF-e: R$ {nota_info['valor_nota']:.2f}")
 
-    # Exibe o dicionário completo da nota
-    print("\nDicionário completo da nota:")
-    print(nota_info)
+    # Produtos
+    print("Cada produto da NF-e:")
+    for produto in nota_info["produtos"]:
+        print(f"  {produto['nome']} | {produto['quantidade']:.0f} un x R$ {produto['valor_unitario']:.2f} = R$ {produto['valor_total']:.2f}")
+
+    # Conferência
+    soma_produtos = sum(produto["valor_total"] for produto in nota_info["produtos"])
+    if round(soma_produtos, 2) == round(nota_info["total_produtos"], 2):
+        print("Conferência OK: a soma dos itens bate com o total de produtos.")
+    else:
+        print(f"Diferença: itens R$ {soma_produtos:.2f} x total da nota R$ {nota_info['total_produtos']:.2f}")
+
+    # Conta do total
+    print(f"Produtos R$ {nota_info['total_produtos']:.2f} + Frete R$ {nota_info['frete']:.2f} = Nota R$ {nota_info['valor_nota']:.2f}")
 
 
 main()
+
+
+
