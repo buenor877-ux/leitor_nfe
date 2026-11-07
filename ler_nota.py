@@ -2,6 +2,7 @@
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+
 # Toda tag da NF-e pertence a este "namespace". Sem ele, o find() não encontra nada.
 NS = {"nfe": "http://www.portalfiscal.inf.br/nfe"}
 
@@ -80,7 +81,10 @@ def main():
     print(f"Produtos R$ {nota_info['total_produtos']:.2f} + Frete R$ {nota_info['frete']:.2f} = Nota R$ {nota_info['valor_nota']:.2f}")
 
 
-main()
+# proteger o módulo para que ele não seja executado quando importado
+if __name__ == "__main__":
+    main()
+
 
 
 
