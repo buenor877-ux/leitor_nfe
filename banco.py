@@ -3,50 +3,97 @@ import sqlite3
 
 
 def criar_tabelas(caminho_banco):
-
-    # Conectar ao banco de dados (ou criar se não existir)
+ # Conectar ao banco de dados (ou criar se não existir)
     conn = sqlite3.connect(caminho_banco)
-    cursor = conn.cursor()
+    try:
+        cursor = conn.cursor()
 
-    # Criar a tabela fornecedores
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS fornecedores (
-            cnpj TEXT PRIMARY KEY,
-            nome TEXT
+        # Criar a tabela fornecedores
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS fornecedores (
+                cnpj TEXT PRIMARY KEY,
+                nome TEXT
+            )
+        ''')
+
+        # Criar a tabela notas
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS notas (
+                chave_acesso TEXT PRIMARY KEY,
+                cnpj_fornecedor TEXT,
+                arquivo TEXT,
+                numero TEXT,
+                data_emissao TEXT,
+                total_produtos REAL,
+                frete REAL,
+                valor_nota REAL,
+                FOREIGN KEY (cnpj_fornecedor) REFERENCES fornecedores(cnpj)
+            )
+        ''')
+
+        # Criar a tabela itens
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS itens (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                chave_acesso TEXT,
+                nome_produto TEXT,
+                quantidade REAL,
+                valor_unitario REAL,
+                valor_total REAL,
+                FOREIGN KEY (chave_acesso) REFERENCES notas(chave_acesso)
+            )
+        ''')
+
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def gravar_nota(caminho_banco, nota_info):
+    conn = sqlite3.connect(caminho_banco)
+    try:
+        cursor = conn.cursor()
+
+        # 1. gravar o fornecedor (ignorar se o CNPJ já existir)
+        cursor.execute(
+            '''
+            INSERT OR IGNORE INTO fornecedores (cnpj, nome)
+            VALUES (?, ?)
+            ''',
+            (nota_info["cnpj_fornecedor"], nota_info["fornecedor"])
         )
-    ''')
 
-    # Criar a tabela notas
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS notas (
-            chave_acesso TEXT PRIMARY KEY,
-            cnpj_fornecedor TEXT,
-            arquivo TEXT,
-            numero TEXT,
-            data_emissao TEXT,
-            total_produtos REAL,
-            frete REAL,
-            valor_nota REAL,
-            FOREIGN KEY (cnpj_fornecedor) REFERENCES fornecedores(cnpj)
+
+            # 2. gravar a nota
+        cursor.execute(
+            '''
+            INSERT INTO notas (chave_acesso, cnpj_fornecedor, arquivo, numero,
+                               data_emissao, total_produtos, frete, valor_nota)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ''',
+            (nota_info["chave_acesso"], nota_info["cnpj_fornecedor"], nota_info["arquivo"],
+             nota_info["numero"], nota_info["data_emissao"], nota_info["total_produtos"],
+             nota_info["frete"], nota_info["valor_nota"])
         )
-    ''')
 
-    # Criar a tabela itens
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS itens (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            chave_acesso TEXT,
-            nome_produto TEXT,
-            quantidade REAL,
-            valor_unitario REAL,
-            valor_total REAL,
-            FOREIGN KEY (chave_acesso) REFERENCES notas(chave_acesso)
-        )
-    ''')
+        # 3. gravar os itens da nota
+        for produto in nota_info["produtos"]:
+            cursor.execute(
+                '''
+                INSERT INTO itens (chave_acesso, nome_produto, quantidade,
+                                   valor_unitario, valor_total)
+                VALUES (?, ?, ?, ?, ?)
+                ''',
+                (nota_info["chave_acesso"], produto["nome"], produto["quantidade"],
+                 produto["valor_unitario"], produto["valor_total"])
+            )
 
-    # Salvar (commit) e fechar a conexão
-    conn.commit()
-    conn.close()
+
+        # conn.commit() é chamado no final, depois de gravar os itens e serve para garantir que todas as operações sejam concluídas com sucesso antes de confirmar as alterações no banco de dados. 
+        conn.commit()
+    finally:
+        conn.close()
+
 
 if __name__ == "__main__":
     criar_tabelas("notas.db")
