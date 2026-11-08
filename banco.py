@@ -54,6 +54,14 @@ def gravar_nota(caminho_banco, nota_info):
     try:
         cursor = conn.cursor()
 
+        # Verifica se a chave já está no banco antes de gravar
+        cursor.execute(
+            "SELECT 1 FROM notas WHERE chave_acesso = ?",
+            (nota_info["chave_acesso"],)
+        )
+        if cursor.fetchone():
+            return False
+
         # 1. gravar o fornecedor (ignorar se o CNPJ já existir)
         cursor.execute(
             '''
@@ -63,8 +71,7 @@ def gravar_nota(caminho_banco, nota_info):
             (nota_info["cnpj_fornecedor"], nota_info["fornecedor"])
         )
 
-
-            # 2. gravar a nota
+        # 2. gravar a nota
         cursor.execute(
             '''
             INSERT INTO notas (chave_acesso, cnpj_fornecedor, arquivo, numero,
@@ -77,7 +84,7 @@ def gravar_nota(caminho_banco, nota_info):
         )
 
         # 3. gravar os itens da nota
-        for produto in nota_info["produtos"]:
+        for produto in nota_info.get("produtos", []):
             cursor.execute(
                 '''
                 INSERT INTO itens (chave_acesso, nome_produto, quantidade,
@@ -86,11 +93,10 @@ def gravar_nota(caminho_banco, nota_info):
                 ''',
                 (nota_info["chave_acesso"], produto["nome"], produto["quantidade"],
                  produto["valor_unitario"], produto["valor_total"])
-            )
+            )        
 
-
-        # conn.commit() é chamado no final, depois de gravar os itens e serve para garantir que todas as operações sejam concluídas com sucesso antes de confirmar as alterações no banco de dados. 
         conn.commit()
+        return True
     finally:
         conn.close()
 
