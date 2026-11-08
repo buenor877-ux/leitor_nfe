@@ -1,4 +1,4 @@
-# Onde paramos (atualizado em 08/11/2026)
+# Onde paramos (atualizado em 08/11/2026, fim da Etapa 4)
 
 ## Leitor de NF-e
 
@@ -8,9 +8,11 @@
 
 **Etapa 3: concluída.** O `gerar_relatorio.py` lê todos os XML da pasta, monta as tabelas de notas e de itens com pandas e grava o `relatorio_notas.xlsx` com as abas `Notas` e `Itens`. Conferido: a soma das notas (R$ 3.071,75) menos a soma dos itens (R$ 2.988,25) dá o frete (R$ 83,50).
 
-**Próximo: Etapa 4 (branch `etapa-4`).** Guardar as notas em um banco SQLite, com as tabelas `fornecedores`, `notas` e `itens`, sem gravar a mesma nota duas vezes.
-- Ler a chave de acesso (atributo `Id` da tag `infNFe`) e o CNPJ do fornecedor, que o `ler_nota` ainda não pega.
-- Pronto quando rodar duas vezes e o banco continuar com 3 notas e 9 itens.
+**Etapa 4: concluída.** O `ler_nota` passou a ler a chave de acesso e o CNPJ do fornecedor. O `banco.py` cria as tabelas `fornecedores`, `notas` e `itens` e tem a `gravar_nota`, que consulta a chave antes de gravar e devolve `True` ou `False`. O `salvar_notas.py` lê a pasta e grava tudo. Conferido: rodando duas vezes, o banco fica com 2 fornecedores, 3 notas (R$ 3.071,75) e 9 itens (R$ 2.988,25).
+
+**Próximo: Etapa 5 (branch `etapa-5`).** Interface e painel com Streamlit: upload dos XML, indicadores e gráficos.
+- A tela de upload deve chamar a `gravar_nota` direto, que já impede nota repetida.
+- Pendências pequenas: ligar o `PRAGMA foreign_keys` nas conexões do `banco.py`.
 
 **Jeito de estudar:** receber o objetivo e os passos gerais, escrever o plano em comentários, aceitar sugestões do VS Code em pedaços pequenos e conseguir explicar cada linha antes de manter.
 
@@ -38,3 +40,10 @@
 - Conferir sugestões de código: o `Path` certo vem de `pathlib`, não de `zipfile`
 - Rodar sem erro não basta: conferir o resultado com os totais
 - Publicar no GitHub: `git remote add`, `git push -u` e conferir antes se não há dado pessoal no histórico
+- SQLite: banco num arquivo `.db`, com tabelas ligadas por chave primária e chave estrangeira
+- Tipos: `REAL` para valores com que se faz conta, `TEXT` para identificadores como CNPJ e número da nota
+- `CREATE TABLE IF NOT EXISTS`, `INSERT` com `?` (evita SQL injection) e `INSERT OR IGNORE`
+- `SELECT` + `fetchone()` para consultar antes de gravar (`None` quando não acha)
+- `commit` confirma tudo de uma vez; `try`/`finally` fecha a conexão mesmo com erro
+- Atributo do XML se lê com `.get("Id")`; `[3:]` corta o começo de um texto
+- Para campo obrigatório, usar colchetes e não `.get(campo, padrão)`, que esconde erro de nome
