@@ -15,9 +15,15 @@ def ler_nota(caminho):
 
     # --- 1. ao em vez de imprimir Juntar dados do cabeçalho da nota: fornecedor, número, data e valor total num dicionario
     fornecedor = raiz.find(".//nfe:emit/nfe:xNome", NS).text
+    cnpj_fornecedor = raiz.find(".//nfe:emit/nfe:CNPJ", NS).text
+    info_nfe = raiz.find(".//nfe:infNFe", NS)
+    id_nfe = info_nfe.get("Id")
+    chave_acesso = id_nfe[3:]
     nota_info = {
         "arquivo": caminho.name,
         "fornecedor": fornecedor,
+        "cnpj_fornecedor": cnpj_fornecedor,
+         "chave_acesso": chave_acesso,
         "numero": raiz.find(".//nfe:ide/nfe:nNF", NS).text,
         "data_emissao": raiz.find(".//nfe:ide/nfe:dhEmi", NS).text
     }
@@ -61,9 +67,11 @@ def main():
     # Cabeçalho
     print("Arquivo:", nota_info["arquivo"])
     print("Fornecedor:", nota_info["fornecedor"])
+    print("CNPJ do fornecedor:", nota_info["cnpj_fornecedor"])
     print("Número da NF-e:", nota_info["numero"])
     print("Data de emissão:", nota_info["data_emissao"])
     print(f"Valor total da NF-e: R$ {nota_info['valor_nota']:.2f}")
+    print("Chave de acesso:", nota_info["chave_acesso"])
 
     # Produtos
     print("Cada produto da NF-e:")
@@ -84,6 +92,9 @@ def main():
 # proteger o módulo para que ele não seja executado quando importado
 if __name__ == "__main__":
     main()
+
+
+
 
 
 
