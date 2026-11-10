@@ -5,6 +5,17 @@ import streamlit as st
 from ler_nota import ler_nota
 from banco import criar_tabelas, gravar_nota
 
+# titulo da página
+st.title("Leitor de NF-e")
+
+
+# Explique para o cliente a finalidade e os ganhos do sistema.
+st.write("""
+O sistema ajuda você a conferir se os totais da nota estão corretos, evitar o
+lançamento duplicado de uma mesma nota e acompanhar os gastos por fornecedor,
+mês e produto.
+""")
+
 # tabelas
 criar_tabelas("notas.db")
 
@@ -23,18 +34,8 @@ for file in arquivos:
     if sucesso:
         st.success(f"Nota {nota_info['numero']} gravada com sucesso!")
     else:
-        st.error(f"Nota {nota_info['numero']} já existe no banco de dados.")
+        st.info(f"Nota {nota_info['numero']} do fornecedor {nota_info['fornecedor']} já existe no banco de dados.")
 
-# titulo da página
-st.title("Leitor de NF-e")
-
-
-# Explique para o cliente a finalidade e os ganhos do sistema.
-st.write("""
-O sistema ajuda você a conferir se os totais da nota estão corretos, evitar o
-lançamento duplicado de uma mesma nota e acompanhar os gastos por fornecedor,
-mês e produto.
-""")
 
 
 
