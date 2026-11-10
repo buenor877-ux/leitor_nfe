@@ -1,10 +1,16 @@
 # Criar a função criar_tabelas(caminho_banco) usando sqlite3.
 import sqlite3
 
+# Abre a conexão, liga a checagem de chave estrangeira e devolve a conexão.
+def conectar_banco(caminho_banco):
+    conn = sqlite3.connect(caminho_banco)
+    conn.execute("PRAGMA foreign_keys = ON")
+    return conn
+
 
 def criar_tabelas(caminho_banco):
  # Conectar ao banco de dados (ou criar se não existir)
-    conn = sqlite3.connect(caminho_banco)
+    conn = conectar_banco(caminho_banco)
     try:
         cursor = conn.cursor()
 
@@ -50,7 +56,7 @@ def criar_tabelas(caminho_banco):
 
 
 def gravar_nota(caminho_banco, nota_info):
-    conn = sqlite3.connect(caminho_banco)
+    conn = conectar_banco(caminho_banco)
     try:
         cursor = conn.cursor()
 
