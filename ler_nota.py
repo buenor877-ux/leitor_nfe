@@ -7,11 +7,10 @@ from pathlib import Path
 NS = {"nfe": "http://www.portalfiscal.inf.br/nfe"}
 
 # Coloque a leitura do XML dentro de uma função chamada ler_nota, que recebe o caminho do arquivo.
-def ler_nota(caminho):
-    caminho = Path(caminho)
+def ler_nota(arquivo):
 
     # Lê o arquivo XML e pega a raiz do documento
-    raiz = ET.parse(caminho).getroot()
+    raiz = ET.parse(arquivo).getroot()
 
     # --- 1. ao em vez de imprimir Juntar dados do cabeçalho da nota: fornecedor, número, data e valor total num dicionario
     fornecedor = raiz.find(".//nfe:emit/nfe:xNome", NS).text
@@ -20,7 +19,7 @@ def ler_nota(caminho):
     id_nfe = info_nfe.get("Id")
     chave_acesso = id_nfe[3:]
     nota_info = {
-        "arquivo": caminho.name,
+        "arquivo": arquivo.name,
         "fornecedor": fornecedor,
         "cnpj_fornecedor": cnpj_fornecedor,
          "chave_acesso": chave_acesso,
