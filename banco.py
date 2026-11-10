@@ -1,5 +1,6 @@
 # Criar a função criar_tabelas(caminho_banco) usando sqlite3.
 import sqlite3
+import pandas as pd
 
 # Abre a conexão, liga a checagem de chave estrangeira e devolve a conexão.
 def conectar_banco(caminho_banco):
@@ -103,6 +104,34 @@ def gravar_nota(caminho_banco, nota_info):
 
         conn.commit()
         return True
+    finally:
+        conn.close()
+
+# Funções de leitura para o painel: cada uma busca uma tabela no banco
+# e devolve um DataFrame do pandas pronto para usar.
+
+# Notas com o nome do fornecedor (o JOIN busca o nome pelo CNPJ).
+def carregar_notas(caminho_banco):
+    conn = conectar_banco(caminho_banco)
+    try:
+        sql = """
+            SELECT notas.numero, fornecedores.nome AS fornecedor, notas.data_emissao,
+                   notas.total_produtos, notas.frete, notas.valor_nota
+            FROM notas
+            JOIN fornecedores ON fornecedores.cnpj = notas.cnpj_fornecedor
+            ORDER BY notas.data_emissao
+        """
+        return pd.read_sql_query(sql, conn)
+    finally:
+        conn.close()
+
+
+# Todos os itens de todas as notas.
+def carregar_itens(caminho_banco):
+    conn = conectar_banco(caminho_banco)
+    try:
+        sql = "SELECT nome_produto, quantidade, valor_unitario, valor_total FROM itens"
+        return pd.read_sql_query(sql, conn)
     finally:
         conn.close()
 
