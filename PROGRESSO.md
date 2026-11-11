@@ -1,4 +1,4 @@
-# Onde paramos (atualizado em 11/11/2026, Etapa 5 concluída, próxima é a Etapa 6)
+# Onde paramos (atualizado em 11/11/2026, Etapa 6 concluída, próxima é a Etapa 7)
 
 ## Leitor de NF-e
 
@@ -12,7 +12,9 @@
 
 **Etapa 5: concluída.** Painel com Streamlit (`streamlit run app.py`): upload dos XML com aviso de nota repetida, indicadores (total R$ 3071.75, 3 notas, 2 fornecedores, média R$ 1023.92), gráficos de gasto por fornecedor (ALFA 2219.00, BETA 852.75), por mês (2026-09 = 1602.25, 2026-10 = 1469.50) e produtos mais comprados (CABO HDMI 50, PENDRIVE 40), e a tabela "Notas no banco". Juntada na `master` e enviada ao GitHub.
 
-**Etapa 6: próxima.** Testes com pytest (leitura, totais e duplicidade).
+**Etapa 6: concluída.** Testes com pytest na pasta `tests` (rodar com `python -m pytest`): `test_ler_nota.py` confere a nota 1532 e os totais das 3 notas; `test_banco.py` confere que a nota repetida não é gravada, usando banco temporário (`tmp_path`). Resultado: 3 passed.
+
+**Etapa 7: próxima.** Publicar: README com prints, deploy no Streamlit Cloud e post no LinkedIn.
 
 **Jeito de estudar:** receber o objetivo e os passos gerais, escrever o plano em comentários, aceitar sugestões do VS Code em pedaços pequenos e conseguir explicar cada linha antes de manter.
 
@@ -51,3 +53,7 @@
 - pandas: `groupby(...)[coluna].sum()` soma por grupo; `.str[:7]` pega o ano-mês da data
 - Em tabela, `sort_values` precisa de `by="coluna"`; funções do banco recebem o caminho (`"notas.db"`)
 - `st.bar_chart` ordena por ordem alfabética; `sort=False` mantém a ordem da tabela
+- pytest: arquivo e função começam com `test_`; `assert` confere o resultado; rodar com `python -m pytest`
+- Valor esperado de teste vem do dado real, nunca de sugestão do VS Code (ela inventa funções e valores)
+- `tmp_path` cria banco temporário para o teste não mexer no `notas.db`
+- Ler erros: `ImportError` (nome não existe no arquivo), `NameError` (faltou importar), `assert X == Y` (de onde vem a diferença?)
