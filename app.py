@@ -39,7 +39,8 @@ for file in arquivos:
 # Carrega as tabelas do banco (já com as notas que acabaram de ser enviadas)
 notas_df = carregar_notas("notas.db")
 itens_df = carregar_itens("notas.db")
-
+itens_df = itens_df.groupby("nome_produto")["quantidade"].sum().reset_index()
+itens_df = itens_df.sort_values(by="quantidade", ascending=False)
 # --- 5.4 Indicadores ---
 st.subheader("Resumo das notas")
 col1, col2, col3, col4 = st.columns(4)
@@ -54,11 +55,19 @@ col4.metric("Média por nota", f"R$ {notas_df['valor_nota'].mean():.2f}")
 # Gasto por fornecedor
 st.subheader("Gasto por fornecedor")
 gasto_fornecedor = notas_df.groupby("fornecedor")["valor_nota"].sum()
-st.bar_chart(gasto_fornecedor)
 
-# Próximos passos da 5.5 (continuar daqui):
-# 1. Gasto por mês: criar a coluna "mes" com os 7 primeiros caracteres da data_emissao,
-#    agrupar por "mes", somar "valor_nota" e mostrar com st.bar_chart.
-# 2. Produtos mais comprados: agrupar itens_df por "nome_produto", somar "quantidade",
-#    ordenar do maior para o menor e mostrar com st.bar_chart.
-# 3. Tabela completa: st.subheader("Notas no banco") e st.dataframe(notas_df).
+# gasto_fornecedor = gasto_fornecedor.sort_values(ascending=False)
+st.bar_chart(gasto_fornecedor)
+# Gasto por mês
+st.subheader("Gasto por mês")
+gasto_mes = notas_df.groupby(notas_df["data_emissao"].str[:7])["valor_nota"].sum()
+# gasto_mes = gasto_mes.sort_index(ascending=False)
+st.bar_chart(gasto_mes)
+
+# --- 5.7 Gráfico de barras com os produtos mais comprados ---
+st.subheader("Produtos mais comprados")
+st.bar_chart(itens_df.set_index("nome_produto"), sort=False)
+
+# --- 5.6 Tabelas ---
+st.subheader("Notas no banco")
+st.dataframe(notas_df)
