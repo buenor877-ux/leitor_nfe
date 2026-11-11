@@ -23,7 +23,7 @@ criar_tabelas("notas.db")
 arquivos = st.file_uploader("Escolha os arquivos XML", type="xml", accept_multiple_files=True)
 
 # Para cada arquivo enviado, faça a leitura da nota e tente gravar no banco de dados.
-for file in arquivos:  
+for file in arquivos:
     # Ler a nota fiscal do arquivo XML
     nota_info = ler_nota(file)
 
@@ -41,6 +41,12 @@ notas_df = carregar_notas("notas.db")
 itens_df = carregar_itens("notas.db")
 itens_df = itens_df.groupby("nome_produto")["quantidade"].sum().reset_index()
 itens_df = itens_df.sort_values(by="quantidade", ascending=False)
+
+# Se o banco estiver vazio, mostra um aviso e para a página aqui
+if notas_df.empty:
+    st.info("Nenhuma nota no banco ainda. Envie os arquivos XML acima para ver o painel.")
+    st.stop()
+
 # --- 5.4 Indicadores ---
 st.subheader("Resumo das notas")
 col1, col2, col3, col4 = st.columns(4)
