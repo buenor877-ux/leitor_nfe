@@ -8,7 +8,7 @@ Marque cada etapa com [x] quando terminar.
 - [x] **Etapa 4: Guardar as notas em banco de dados.** SQLite com tabelas de fornecedores, notas e itens, sem gravar nota repetida.
 - [x] **Etapa 5: Interface e painel com Streamlit.** Upload dos XML, indicadores e gráficos (gasto por fornecedor, por mês, produtos mais comprados).
 - [x] **Etapa 6: Testes com pytest.** Testar leitura, totais e duplicidade.
-- [ ] **Etapa 7: Publicar.** README com prints, deploy no Streamlit Cloud e post no LinkedIn.
+- [x] **Etapa 7: Publicar.** README com prints, deploy no Streamlit Cloud e post no LinkedIn.
 
 As notas da pasta `notas_exemplo` são fictícias: as empresas e os CNPJs não existem.
 Notas reais têm dados de empresas e pessoas, então nunca suba notas reais para o GitHub.

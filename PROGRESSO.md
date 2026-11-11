@@ -1,4 +1,4 @@
-# Onde paramos (atualizado em 11/11/2026, Etapa 6 concluída, próxima é a Etapa 7)
+# Onde paramos (atualizado em 11/11/2026, projeto concluído e publicado)
 
 ## Leitor de NF-e
 
@@ -14,7 +14,9 @@
 
 **Etapa 6: concluída.** Testes com pytest na pasta `tests` (rodar com `python -m pytest`): `test_ler_nota.py` confere a nota 1532 e os totais das 3 notas; `test_banco.py` confere que a nota repetida não é gravada, usando banco temporário (`tmp_path`). Resultado: 3 passed.
 
-**Etapa 7: próxima.** Publicar: README com prints, deploy no Streamlit Cloud e post no LinkedIn.
+**Etapa 7: concluída.** `requirements.txt` (streamlit e pandas), README com prints na pasta `imagens`, aviso de banco vazio com `st.stop()`, painel online em https://leitor-nfe-leonardo.streamlit.app (atualiza sozinho a cada `git push` na `master`) e post publicado no LinkedIn.
+
+**Projeto concluído.** Próximo projeto: IA privada.
 
 **Jeito de estudar:** receber o objetivo e os passos gerais, escrever o plano em comentários, aceitar sugestões do VS Code em pedaços pequenos e conseguir explicar cada linha antes de manter.
 
@@ -57,3 +59,8 @@
 - Valor esperado de teste vem do dado real, nunca de sugestão do VS Code (ela inventa funções e valores)
 - `tmp_path` cria banco temporário para o teste não mexer no `notas.db`
 - Ler erros: `ImportError` (nome não existe no arquivo), `NameError` (faltou importar), `assert X == Y` (de onde vem a diferença?)
+- `requirements.txt` lista as bibliotecas com `==versão`; o Streamlit Cloud instala a partir dele
+- README: problema, o que faz, tecnologias, como rodar, prints (`![texto](pasta/arquivo.png)`)
+- `.empty` confere tabela vazia; `st.stop()` para a página; tratar o caso "sem dados" antes das contas
+- Windows esconde extensões: renomear digitando `.png` vira `.png.png`
+- Deploy no Streamlit Cloud: repositório, branch `master`, `app.py` e versão do Python
