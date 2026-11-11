@@ -1,4 +1,4 @@
-# Onde paramos (atualizado em 10/11/2026, Etapa 5 parada na parte 5.5)
+# Onde paramos (atualizado em 11/11/2026, Etapa 5 concluída, próxima é a Etapa 6)
 
 ## Leitor de NF-e
 
@@ -10,17 +10,9 @@
 
 **Etapa 4: concluída.** O `ler_nota` passou a ler a chave de acesso e o CNPJ do fornecedor. O `banco.py` cria as tabelas `fornecedores`, `notas` e `itens` e tem a `gravar_nota`, que consulta a chave antes de gravar e devolve `True` ou `False`. O `salvar_notas.py` lê a pasta e grava tudo. Conferido: rodando duas vezes, o banco fica com 2 fornecedores, 3 notas (R$ 3.071,75) e 9 itens (R$ 2.988,25).
 
-**Etapa 5: em andamento (branch `etapa-5`).** Interface e painel com Streamlit. Rodar com `streamlit run app.py`.
-- [x] 5.0 Preparação: branch, Streamlit instalado e `PRAGMA foreign_keys = ON` na função `conectar_banco`.
-- [x] 5.1 Primeira tela: título e texto explicando o sistema.
-- [x] 5.2 Upload dos XML: o `ler_nota` passou a aceitar o arquivo enviado (não usa mais `Path(...)`), e nota repetida aparece com `st.info`.
-- [x] 5.3 Leitura do banco: `carregar_notas` (com `JOIN` para trazer o nome do fornecedor) e `carregar_itens` no `banco.py`.
-- [x] 5.4 Indicadores: total gasto (R$ 3071.75), 3 notas, 2 fornecedores e média por nota (R$ 1023.92).
-- [ ] **5.5 Gráficos: continuar daqui.** O de gasto por fornecedor já está pronto (ALFA 2219.00, BETA 852.75). Faltam, nesta ordem, os passos que estão em comentário no fim do `app.py`:
-  1. Gasto por mês: coluna `mes` com `data_emissao.str[:7]`, `groupby`, `sum` e `st.bar_chart`. Esperado: 2026-09 = 1602.25 e 2026-10 = 1469.50.
-  2. Produtos mais comprados: `itens_df` agrupado por `nome_produto`, soma da `quantidade`, `sort_values(ascending=False)`. Esperado: CABO HDMI 50 e PENDRIVE 32GB 40 no topo.
-  3. Tabela completa: `st.subheader("Notas no banco")` e `st.dataframe(notas_df)`.
-- [ ] 5.6 Fechamento: conferir os valores, commit, merge na `master`, `git push`, marcar a etapa no `ROTEIRO.md` (incluir a linha da Etapa 4, que está faltando) e atualizar este arquivo.
+**Etapa 5: concluída.** Painel com Streamlit (`streamlit run app.py`): upload dos XML com aviso de nota repetida, indicadores (total R$ 3071.75, 3 notas, 2 fornecedores, média R$ 1023.92), gráficos de gasto por fornecedor (ALFA 2219.00, BETA 852.75), por mês (2026-09 = 1602.25, 2026-10 = 1469.50) e produtos mais comprados (CABO HDMI 50, PENDRIVE 40), e a tabela "Notas no banco". Juntada na `master` e enviada ao GitHub.
+
+**Etapa 6: próxima.** Testes com pytest (leitura, totais e duplicidade).
 
 **Jeito de estudar:** receber o objetivo e os passos gerais, escrever o plano em comentários, aceitar sugestões do VS Code em pedaços pequenos e conseguir explicar cada linha antes de manter.
 
@@ -55,3 +47,7 @@
 - `commit` confirma tudo de uma vez; `try`/`finally` fecha a conexão mesmo com erro
 - Atributo do XML se lê com `.get("Id")`; `[3:]` corta o começo de um texto
 - Para campo obrigatório, usar colchetes e não `.get(campo, padrão)`, que esconde erro de nome
+- Streamlit: `st.subheader`, `st.columns`, `st.metric`, `st.bar_chart` e `st.dataframe`
+- pandas: `groupby(...)[coluna].sum()` soma por grupo; `.str[:7]` pega o ano-mês da data
+- Em tabela, `sort_values` precisa de `by="coluna"`; funções do banco recebem o caminho (`"notas.db"`)
+- `st.bar_chart` ordena por ordem alfabética; `sort=False` mantém a ordem da tabela

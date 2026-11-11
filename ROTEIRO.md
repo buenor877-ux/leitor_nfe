@@ -5,7 +5,8 @@ Marque cada etapa com [x] quando terminar.
 - [x] **Etapa 1: Preparar o projeto e ler uma nota.** Ambiente virtual, Git, estrutura do XML e primeiro script com ElementTree.
 - [x] **Etapa 2: Função que lê uma nota inteira.** `ler_nota(caminho)` devolve um dicionário com cabeçalho e itens.
 - [x] **Etapa 3: Ler várias notas de uma vez.** Ler a pasta inteira, montar tabelas com pandas e exportar para Excel.
-- [ ] **Etapa 5: Interface e painel com Streamlit.** Upload dos XML, indicadores e gráficos (gasto por fornecedor, por mês, produtos mais comprados).
+- [x] **Etapa 4: Guardar as notas em banco de dados.** SQLite com tabelas de fornecedores, notas e itens, sem gravar nota repetida.
+- [x] **Etapa 5: Interface e painel com Streamlit.** Upload dos XML, indicadores e gráficos (gasto por fornecedor, por mês, produtos mais comprados).
 - [ ] **Etapa 6: Testes com pytest.** Testar leitura, totais e duplicidade.
 - [ ] **Etapa 7: Publicar.** README com prints, deploy no Streamlit Cloud e post no LinkedIn.
 
