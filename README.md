@@ -2,7 +2,9 @@
 
 Painel em Python que lê notas fiscais eletrônicas (arquivos XML), confere os totais, guarda tudo num banco de dados e mostra os gastos por fornecedor, por mês e por produto.
 
-**Acesse online:** _(link do Streamlit Cloud, entra na parte 7.3)_
+**Acesse online:** https://leitor-nfe-leonardo.streamlit.app
+
+Para testar, baixe os 3 arquivos da pasta [`notas_exemplo`](notas_exemplo) e envie pelo painel.
 
 ![Painel com os indicadores](imagens/painel_resumo.png)
 
